@@ -1,0 +1,265 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+    /* Bagian kiri */
+    .header-left a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Logo tengah */
+    .header-center img {
+      height: 70px;
+      cursor: pointer;
+    }
+
+    /* Bagian kanan */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-right a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hover + Active */
+    .header-right a:hover,
+    .header-left a:hover,
+    .active {
+      color: #e91e63; /* pink */
+    }
+
+/* kasih jarak dari header */
+main {
+  margin-top: 100px;   /* biar konten mulai setelah header */
+  padding: 20px;
+}
+
+/* Promo Banner */
+.promo-banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 50px; /* jarak ke bawah */
+}
+
+.promo-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.promo-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.promo-text h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.promo-text p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.btn-shop {
+  background: #e91e63;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-shop:hover {
+  background: #d81b60;
+}
+
+/* Shop by Category */
+.category {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.category h2 {
+  margin-bottom: 20px;
+}
+
+.category-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* biar rapi di layar kecil */
+}
+
+.category-cards .card {
+  background: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #333;
+  width: 180px;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.category-cards .card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px 12px 0 0;
+  object-fit: cover;
+}
+
+.category-cards .card h3 {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.category-cards .card:hover {
+  transform: translateY(-5px);
+  color: #e91e63;
+}
+
+/* New Arrivals */
+/* === New Arrivals === */
+.new-arrivals {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.new-arrivals h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* Grid produk sama seperti viewmatahari */
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  justify-items: center;
+}
+
+/* Card produk */
+.product-card {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-card h3 {
+  margin: 12px 0 6px;
+  font-size: 18px;
+  color: #222;
+}
+
+.product-card .desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  min-height: 40px;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: #e91e63;
+  margin-bottom: 12px;
+}
+
+/* Tombol Tambah / Kurang */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.actions .btn {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  background: #e91e63;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.actions .btn:hover {
+  background: #d81b60;
+}
+
+/* Badge Cart */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #e91e63;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

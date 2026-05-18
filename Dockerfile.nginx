@@ -1,0 +1,13 @@
+FROM nginx:latest
+
+# Hapus default config bawaan nginx
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy file konfigurasi nginx Anda
+COPY Default.conf /etc/nginx/conf.d/default.conf
+
+# Copy seluruh project ke dalam container
+WORKDIR /var/www/Florist
+COPY . /var/www/Florist
+
+EXPOSE 80

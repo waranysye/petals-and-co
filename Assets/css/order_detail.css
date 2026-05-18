@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+    /* Bagian kiri */
+    .header-left a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Logo tengah */
+    .header-center img {
+      height: 70px;
+      cursor: pointer;
+    }
+
+    /* Bagian kanan */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-right a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hover + Active */
+    .header-right a:hover,
+    .header-left a:hover,
+    .active {
+      color: #e91e63; /* pink */
+    }
+
+/* kasih jarak dari header */
+main {
+  margin-top: 100px;   /* biar konten mulai setelah header */
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+}
+
+.detail-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.detail-container h2 {
+  margin-bottom: 20px;
+}
+
+.detail-container p {
+  margin: 6px 0;
+  color: #444;
+}
+
+.detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.detail-table th, .detail-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.product-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 6px;
+  vertical-align: middle;
+}
+
+.btn-back {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 8px 14px;
+  background: #e91e63;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.btn-back:hover {
+  background: #c2185b;
+}

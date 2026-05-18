@@ -1,0 +1,187 @@
+/* === Global Style === */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+/* === Header === */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Bagian kiri (Account) */
+.header-left a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Logo tengah */
+.header-center img {
+  height: 70px;
+  cursor: pointer;
+}
+
+/* Bagian kanan (Transaction + Cart) */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-right a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Hover dan Active */
+.header-right a:hover,
+.header-left a:hover,
+.active {
+  color: #e91e63; /* pink */
+}
+
+/* === Konten utama === */
+main {
+  margin-top: 100px; /* memberi jarak agar tidak tertutup header */
+  padding: 20px;
+}
+
+/* === Tombol Back === */
+.back-btn {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+  margin-top: 100px; /* sejajar dengan header */
+}
+
+.back-btn a {
+  text-decoration: none;
+  color: #e91e63;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* === Judul halaman === */
+.page-header {
+  text-align: center;
+  padding: 0 20px 20px;
+  margin-top: -10px; /* supaya sejajar dengan tombol back */
+}
+
+.page-header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.page-header p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: #555;
+}
+
+/* === Grid Produk === */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
+
+/* === Card Produk === */
+.product-card {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-card h3 {
+  margin: 12px 0 6px;
+  font-size: 18px;
+  color: #222;
+}
+
+.product-card .desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  min-height: 40px;
+}
+
+.product-card .price {
+  font-weight: bold;
+  color: #e91e63;
+  margin-bottom: 12px;
+}
+
+/* === Tombol Aksi (Tambah / Kurang) === */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.actions .btn {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  background: #e91e63;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.actions .btn:hover {
+  background: #d81b60;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #e91e63;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

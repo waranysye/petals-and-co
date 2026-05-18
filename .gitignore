@@ -1,0 +1,27 @@
+# Operating System Files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Docker
+.docker/
+mysql_data/
+
+# Local Environment
+.env
+.env.local
+.env.*.local
+
+# Web Server / PHP
+error_log
+*.log

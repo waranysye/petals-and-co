@@ -1,0 +1,148 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+    /* Bagian kiri */
+    .header-left a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Logo tengah */
+    .header-center img {
+      height: 70px;
+      cursor: pointer;
+    }
+
+    /* Bagian kanan */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-right a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hover + Active */
+    .header-right a:hover,
+    .header-left a:hover,
+    .active {
+      color: #e91e63; /* pink */
+    }
+
+/* kasih jarak dari header */
+main {
+  margin-top: 100px;   /* biar konten mulai setelah header */
+  padding: 20px;
+}
+
+.back-btn a {
+  text-decoration: none;
+  color: #e91e63;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.btn-detail {
+  padding: 6px 12px;
+  background: #e91e63;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.btn-detail:hover {
+  background: #c2185b;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+}
+
+.transaction-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.transaction-container h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table th, .order-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.order-table th {
+  font-weight: bold;
+  color: #555;
+}
+
+.order-table td {
+  color: #333;
+}
+
+/* Status Colors */
+.status {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status.delivered {
+  background: #e0f8e9;
+  color: #2e7d32;
+}
+
+.status.shipped {
+  background: #e0f0ff;
+  color: #1565c0;
+}
+
+.status.cancelled {
+  background: #ffe0e0;
+  color: #c62828;
+}
+
+.status.pending {
+  background: #fff8e1;
+  color: #ff8f00;
+}
