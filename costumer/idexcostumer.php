@@ -46,12 +46,9 @@ include '../Config/database.php';
 
    <!-- Banner Promo -->
   <section class="promo-banner">
-     <img src="../Assets/img/promosi.png" alt="Promo Banner">
-    <div class="promo-text">
-      <h1>Selamat Datang di Rosette Florist</h1>
-      <p>Temukan rangkaian bunga segar terbaik untuk setiap momen berharga Anda 🌸</p>
-      <a href="#category-section" class="btn-shop">Shop Now</a>
-    </div>
+    <a href="#category-section">
+      <img src="../Assets/img/promosi.png" alt="Promo Banner">
+    </a>
   </section>
 
   <!-- Shop by Category -->
