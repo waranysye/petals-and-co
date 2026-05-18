@@ -3,7 +3,14 @@
   $current_page = basename($_SERVER['PHP_SELF']);
 
   session_start();
-include '../Config/database.php';
+
+  // Guard: Ensure user is logged in and is an admin
+  if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+      header("Location: ../auth/login.php");
+      exit();
+  }
+
+  include '../Config/database.php';
 
 // Ambil ID admin dari query string
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -48,19 +55,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Profil Admin</title>
-  <link rel="stylesheet" href="../Assets/css/edit_profileadmin.css">
+  <link rel="stylesheet" href="../Assets/css/indexadmin.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="../Assets/css/edit_profileadmin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <h2>My App</h2>
+    <h2>Petals & Co</h2>
     <ul>
-      <li><a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">🏠Dashboard</a></li>
-      <li><a href="products.php" class="<?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">🌸Produk</a></li>
-      <li><a href="customers.php" class="<?php echo ($current_page == 'customers.php') ? 'active' : ''; ?>">👥Orders</a></li>
-      <li><a href="reports.php" class="<?php echo ($current_page == 'reports.php') ? 'active' : ''; ?>">📊Laporan</a></li>
-      <li><a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">⚙️Akun</a></li>
+      <li><a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">🏠 Dashboard</a></li>
+      <li><a href="products.php" class="<?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">🌸 Products</a></li>
+      <li><a href="customers.php" class="<?php echo ($current_page == 'customers.php') ? 'active' : ''; ?>">👥 Orders</a></li>
+      <li><a href="reports.php" class="<?php echo ($current_page == 'reports.php') ? 'active' : ''; ?>">📊 Reports</a></li>
+      <li><a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">⚙️ Account</a></li>
        <li class="bottom-menu"><a href="logout.php">🚪 Logout</a></li>
     </ul>
   </div>
@@ -72,10 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Judul otomatis berdasarkan halaman
         switch($current_page) {
           case 'index.php': echo 'Dashboard'; break;
-          case 'products.php': echo 'Produk'; break;
-          case 'customers.php': echo 'Pelanggan'; break;
-          case 'reports.php': echo 'Laporan'; break;
-          case 'profile.php': echo 'Akun'; break;
+          case 'products.php': echo 'Products'; break;
+          case 'customers.php': echo 'Orders'; break;
+          case 'reports.php': echo 'Reports'; break;
+          case 'profile.php': echo 'Account'; break;
           default: echo 'Admin Panel';
         }
       ?>
@@ -89,10 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Main Content -->
   <div class="main-content">
     <div class="form-container">
-      <h2>Form Edit Profil</h2>
+      <h2>Edit Profile Details</h2>
       <form action="" method="POST">
         <div class="form-group">
-          <label for="name">Nama</label>
+          <label for="name">Name</label>
           <input type="text" name="name" id="name" value="<?= htmlspecialchars($admin['name']); ?>" required>
         </div>
 
@@ -102,17 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="form-group">
-          <label for="phone">No. Telepon</label>
+          <label for="phone">Phone Number</label>
           <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($admin['phone']); ?>">
         </div>
 
         <div class="form-group">
-          <label for="password">Password (kosongkan jika tidak diubah)</label>
+          <label for="password">Password (leave blank if unchanged)</label>
           <input type="password" name="password" id="password">
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn-save">Save</button>
+          <button type="submit" class="btn-save">Save Details</button>
           <a href="profile.php" class="btn-back">Back</a>
         </div>
       </form>

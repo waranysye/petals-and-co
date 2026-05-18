@@ -12,6 +12,14 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+// Ambil jumlah item di keranjang secara dinamis
+$cartCount = 0;
+$stmt = $conn->prepare("SELECT SUM(quantity) AS total_items FROM cart WHERE user_id = ?");
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$res = $stmt->get_result()->fetch_assoc();
+$cartCount = $res['total_items'] ? $res['total_items'] : 0;
+
 // Ambil data orders user
 $query = $conn->prepare("SELECT id, order_date, status, total_amount FROM orders WHERE user_id = ? ORDER BY order_date DESC");
 $query->bind_param("i", $user_id);
@@ -24,35 +32,53 @@ $orders = $result->fetch_all(MYSQLI_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Header</title>
+  <title>My Orders | Petals & Co</title>
   <!-- Panggil CSS -->
- <link rel="stylesheet" href="../Assets/css/transaction.css">
+  <link rel="stylesheet" href="../Assets/css/indexcostumer.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="../Assets/css/transaction.css">
 </head>
 <body>
 
+  <!-- Header / Navigation Bar -->
   <header>
-    <!-- Kiri: Account -->
     <div class="header-left">
-      <a href="profilecst.php" class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
-        <img src="../Assets/img/iconprofile.png" alt="Account" width="20"> Account
-      </a>
+      <a href="idexcostumer.php" class="logo-text">Petals & Co</a>
     </div>
 
-    <!-- Tengah: Logo -->
-    <div class="header-center">
-      <a href="idexcostumer.php" class="<?php echo ($current_page == 'idexcostumer.php') ? 'active' : ''; ?>">
-         <img src="../Assets/img/flower-logo.png" alt="Logo Florist" class="Logo"> 
-      </a>
-    </div>
+    <nav class="header-center">
+      <a href="idexcostumer.php" class="<?php echo ($current_page == 'idexcostumer.php') ? 'active' : ''; ?>">Home</a>
+      <a href="collections.php" class="<?php echo ($current_page == 'collections.php') ? 'active' : ''; ?>">Collections</a>
+      <a href="about.php" class="<?php echo ($current_page == 'about.php') ? 'active' : ''; ?>">About Us</a>
+    </nav>
 
-    <!-- Kanan: Transaction + Cart -->
     <div class="header-right">
-      <a href="transaction.php" class="<?php echo ($current_page == 'transaction.php') ? 'active' : ''; ?>">
-        <img src="../Assets/img/icontrans.png" alt="Transaction" width="20"> My Transaction
+      <!-- Search Form -->
+      <div class="search-container">
+        <form action="collections.php" method="GET" class="search-form">
+          <input type="text" name="search" placeholder="Search flowers..." required>
+          <button type="submit" title="Search">
+            <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Shopping Bag / Cart -->
+      <a href="cart.php" class="cart-icon-link" title="Cart">
+        <svg viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span class="cart-badge" style="<?php echo ($cartCount > 0) ? '' : 'display: none;'; ?>"><?php echo $cartCount; ?></span>
       </a>
-      <a href="cart.php" class="<?php echo ($current_page == 'cart.php') ? 'active' : ''; ?>">
-        <img src="../Assets/img/iconkrnj.png" alt="Cart" width="20"> Cart
-      </a>
+
+      <!-- Akun & Transaksi -->
+      <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="profilecst.php" class="account-link-btn" title="My Account">
+          <img src="../Assets/img/iconprofile.png" alt="Profile" width="18"> Account
+        </a>
+        <a href="transaction.php" class="account-link-btn" title="My Orders">
+          <img src="../Assets/img/icontrans.png" alt="Orders" width="18"> Orders
+        </a>
+      <?php else: ?>
+        <a href="../auth/login.php" class="account-link-btn" style="border: 1px solid var(--primary-green); padding: 5px 12px; border-radius: 4px;">Login</a>
+      <?php endif; ?>
     </div>
   </header>
 
@@ -97,7 +123,7 @@ $orders = $result->fetch_all(MYSQLI_ASSOC);
       <?php endforeach; ?>
     <?php else: ?>
       <tr>
-        <td colspan="5">Belum ada transaksi.</td>
+        <td colspan="5" style="text-align:center; padding: 32px; color: #716f6b;">You have no orders yet. <a href="collections.php">Start shopping</a></td>
       </tr>
     <?php endif; ?>
   </tbody>

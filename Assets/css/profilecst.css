@@ -146,6 +146,25 @@ input[readonly] {
   background: #aaa;
 }
 
+.btn-logout {
+  padding: 10px 16px;
+  background: transparent;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  margin-left: auto; /* push to the right */
+}
+
+.btn-logout:hover {
+  background: #c62828;
+  color: #ffffff;
+  border-color: #c62828;
+}
+
 .success-msg {
   background: #d4edda;
   color: #155724;

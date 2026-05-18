@@ -1,5 +1,4 @@
 <?php
-  // Ambil nama file yang sedang dibuka
   $current_page = basename($_SERVER['PHP_SELF']);
   session_start();
   include '../Config/database.php';
@@ -14,6 +13,30 @@
       $res = $stmt->get_result()->fetch_assoc();
       $cartCount = $res['total_items'] ? $res['total_items'] : 0;
   }
+
+  // Tangkap query pencarian & kategori
+  $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, trim($_GET['search'])) : '';
+  $category_filter = isset($_GET['category']) ? mysqli_real_escape_string($conn, trim($_GET['category'])) : '';
+
+  // Buat query SQL dinamis
+  $sql = "SELECT * FROM flowers WHERE 1=1";
+  if ($search !== '') {
+      $sql .= " AND (name LIKE '%$search%' OR description LIKE '%$search%' OR category LIKE '%$search%')";
+  }
+  if ($category_filter !== '') {
+      // Map kategori
+      $cat_map = [
+          'mawar' => 'Bunga Mawar',
+          'matahari' => 'Bunga Matahari',
+          'anggrek' => 'Bunga Anggrek'
+      ];
+      if (array_key_exists($category_filter, $cat_map)) {
+          $db_category = $cat_map[$category_filter];
+          $sql .= " AND category = '$db_category'";
+      }
+  }
+  $sql .= " ORDER BY name ASC";
+  $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +44,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Petals & Co | Premium Floral Arrangements</title>
+  <title>Collections | Petals & Co</title>
   <!-- Panggil CSS -->
   <link rel="stylesheet" href="../Assets/css/indexcostumer.css?v=<?php echo time(); ?>">
 </head>
@@ -29,24 +52,21 @@
 
   <!-- Header / Navigation Bar -->
   <header>
-    <!-- Kiri: Brand Logo -->
     <div class="header-left">
       <a href="idexcostumer.php" class="logo-text">Petals & Co</a>
     </div>
 
-    <!-- Tengah: Menu Navigasi (Occasions Dihapus) -->
     <nav class="header-center">
       <a href="idexcostumer.php" class="<?php echo ($current_page == 'idexcostumer.php') ? 'active' : ''; ?>">Home</a>
-      <a href="collections.php" class="<?php echo ($current_page == 'collections.php') ? 'active' : ''; ?>">Collections</a>
+      <a href="collections.php" class="<?php echo ($current_page == 'collections.php' && $category_filter == '') ? 'active' : ''; ?>">Collections</a>
       <a href="about.php" class="<?php echo ($current_page == 'about.php') ? 'active' : ''; ?>">About Us</a>
     </nav>
 
-    <!-- Kanan: Search & Icons -->
     <div class="header-right">
       <!-- Search Form -->
       <div class="search-container">
         <form action="collections.php" method="GET" class="search-form">
-          <input type="text" name="search" placeholder="Search flowers..." required>
+          <input type="text" name="search" placeholder="Search flowers..." value="<?php echo htmlspecialchars($search); ?>">
           <button type="submit" title="Search">
             <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
           </button>
@@ -73,85 +93,38 @@
     </div>
   </header>
 
-  <!-- Hero Section (Promo Banner) -->
-  <section class="hero-banner-section">
-    <img src="../Assets/img/promosi.png?v=<?php echo time(); ?>" alt="Petals & Co Hero Banner">
-    <div class="hero-content-overlay">
-      <span class="category-subtitle" style="color: rgba(255, 255, 255, 0.85); letter-spacing: 2px;">BEST CURATION</span>
-      <h1>A Touch of Nature for Every Precious Moment</h1>
-      <p>Create unforgettable memories with our premium flower arrangements designed by professional florists.</p>
-      <div class="hero-actions">
-        <a href="#category-section" class="btn-primary">Shop Now</a>
-        <a href="collections.php" class="btn-secondary">View Collections</a>
+  <!-- Page title header -->
+  <div class="page-header">
+    <h1>Our Collections</h1>
+    <p>Explore our curated collection of fresh floral arrangements, crafted specially to celebrate every emotion and precious moment.</p>
+    <?php if ($search !== ''): ?>
+      <div style="margin-top: 15px; font-size: 14px; font-weight: 600; color: var(--accent-pink);">
+        Showing results for: "<?php echo htmlspecialchars($search); ?>" 
+        <a href="collections.php" style="margin-left: 10px; font-weight: normal; font-size: 12px; text-decoration: underline; color: var(--text-muted);">Clear Search</a>
       </div>
-    </div>
-  </section>
+    <?php endif; ?>
+  </div>
 
-  <!-- Shop by Category (Asymmetrical Grid Showcase) -->
-  <section class="category-showcase-section" id="category-section">
-    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
-      
-      <div class="category-section-intro">
-        <span class="category-subtitle">CATEGORIES</span>
-        <h2 class="category-heading">Shop by Category</h2>
-      </div>
+  <!-- Layout Utama Halaman Koleksi -->
+  <div class="collections-layout">
+    
+    <!-- Sidebar Kategori -->
+    <aside class="collections-sidebar">
+      <h3 class="sidebar-title">Categories</h3>
+      <ul class="category-filter-list">
+        <li><a href="collections.php" class="<?php echo ($category_filter == '') ? 'active' : ''; ?>">All Collections</a></li>
+        <li><a href="collections.php?category=mawar" class="<?php echo ($category_filter == 'mawar') ? 'active' : ''; ?>">Roses</a></li>
+        <li><a href="collections.php?category=matahari" class="<?php echo ($category_filter == 'matahari') ? 'active' : ''; ?>">Sunflowers</a></li>
+        <li><a href="collections.php?category=anggrek" class="<?php echo ($category_filter == 'anggrek') ? 'active' : ''; ?>">Orchids</a></li>
+      </ul>
+    </aside>
 
-      <div class="category-grid-container">
-        <!-- Left Tall Card: Roses -->
-        <div class="category-card-premium card-tall card-roses">
-          <img src="../Assets/img/mawarctg.jpg" alt="Roses Collection">
-          <div class="category-card-overlay">
-            <h3>Roses</h3>
-            <a href="viewmawar.php" class="category-card-btn">Shop Roses</a>
-          </div>
-        </div>
-
-        <!-- Right Stacked Column -->
-        <div class="category-right-stack">
-          <!-- Top Horizontal Card: Sunflowers -->
-          <div class="category-card-premium card-wide card-sunflowers">
-            <img src="../Assets/img/sunflowerctg.jpg" alt="Sunflowers Collection">
-            <div class="category-card-overlay">
-              <h3>Sunflowers</h3>
-              <a href="viewmatahari.php" class="category-card-btn">View Series</a>
-            </div>
-          </div>
-
-          <!-- Bottom Horizontal Card: Orchids -->
-          <div class="category-card-premium card-wide card-orchids">
-            <img src="../Assets/img/anggrekctg.jpg" alt="Orchids Collection">
-            <div class="category-card-overlay">
-              <h3>Orchids</h3>
-              <a href="viewanggrek.php" class="category-card-btn">View More</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Koleksi Populer (New Arrivals) -->
-  <section class="popular-collections-section">
-    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
-      
-      <div class="section-intro">
-        <div class="section-intro-text">
-          <div class="subtitle">BEST CURATION</div>
-          <h2>Popular Collections</h2>
-        </div>
-        <a href="collections.php" class="view-all-link">View All Products</a>
-      </div>
-
-      <div class="product-grid-layout">
+    <!-- Catalog Grid -->
+    <main class="collections-catalog-wrapper">
+      <div class="collections-catalog-grid">
         <?php
-          // Ambil 3 produk terbaru
-          $result = $conn->query("SELECT * FROM flowers ORDER BY created_at DESC LIMIT 3");
-
-          if ($result->num_rows > 0) {
+          if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-              // Custom badge based on category
               $badge = '';
               if ($row['category'] == 'Bunga Mawar') {
                   $badge = '<span class="product-badge-accent best-seller">Best Seller</span>';
@@ -187,89 +160,20 @@
               ';
             }
           } else {
-            echo "<p class='no-product'>No products available yet.</p>";
+            echo "<p class='no-product'>No flowers found matching your search. <a href='collections.php'>Browse all</a></p>";
           }
         ?>
       </div>
+    </main>
 
-    </div>
-  </section>
-
-  <!-- Mengapa Memilih Kami Section -->
-  <section class="why-choose-us-section">
-    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
-      
-      <div class="why-choose-us-grid">
-        
-        <!-- Left: Handcrafted Florist Image -->
-        <div class="why-choose-us-img">
-          <img src="../Assets/img/florist_why_choose_us.png" alt="Petals & Co Craftsmanship">
-        </div>
-
-        <!-- Right: Value Proposition list -->
-        <div class="why-choose-us-content">
-          <div class="subtitle">OUR VALUES</div>
-          <h2>Why Choose Us</h2>
-          <p class="main-desc">We believe that every flower has a story. That is why we are committed to providing the highest quality in every arrangement.</p>
-
-          <!-- Item 1: Fresh Daily -->
-          <div class="value-point-item">
-            <div class="value-point-icon-box">
-              <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </div>
-            <div class="value-point-text">
-              <h4>Fresh Daily</h4>
-              <p>Flowers are picked every morning from the best gardens to ensure long-lasting freshness in your room.</p>
-            </div>
-          </div>
-
-          <!-- Item 2: 2-Hour Delivery -->
-          <div class="value-point-item">
-            <div class="value-point-icon-box">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M12 6v6l4 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </div>
-            <div class="value-point-text">
-              <h4>2-Hour Delivery</h4>
-              <p>Express delivery service that ensures flowers arrive in your hands in perfect condition in just 2 hours.</p>
-            </div>
-          </div>
-
-          <!-- Item 3: Expert Florists -->
-          <div class="value-point-item">
-            <div class="value-point-icon-box">
-              <svg viewBox="0 0 24 24"><path d="M20 7h-9M14 17H5M12 12H3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </div>
-            <div class="value-point-text">
-              <h4>Expert Florists</h4>
-              <p>Our experienced florist team sources and arranges each stem with high artistic precision.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Newsletter Signup CTA -->
-  <section class="newsletter-cta-section">
-    <h2>Send Beauty Today</h2>
-    <p>Subscribe to get weekly floral inspiration and exclusive offers from Petals & Co.</p>
-    <div class="newsletter-form-wrapper">
-      <input type="email" placeholder="Your email address" required>
-      <button type="button">Sign Up</button>
-    </div>
-  </section>
+  </div>
 
   <!-- Footer -->
   <footer>
     <div class="footer-grid-layout">
-      
-      <!-- Kolom 1: Brand Info -->
       <div class="footer-brand-column">
         <h3>Petals & Co</h3>
-        <p>Bringing nature's beauty into every precious moment of your life through the art of floral arrangements.</p>
+        <p>Membawa keindahan alam ke dalam setiap momen berharga dalam hidup Anda melalui seni rangkaian bunga.</p>
         <div class="footer-social-links">
           <a href="#" title="Website"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" fill="none" stroke-width="2"></circle><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" fill="none" stroke-width="2"></path></svg></a>
           <a href="#" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" fill="none" stroke-width="2"></rect><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01" stroke="currentColor" fill="currentColor"></path></svg></a>
@@ -277,7 +181,6 @@
         </div>
       </div>
 
-      <!-- Kolom 2: Quick Links -->
       <div class="footer-links-column">
         <h4>Quick Links</h4>
         <ul>
@@ -287,7 +190,6 @@
         </ul>
       </div>
 
-      <!-- Kolom 3: Support -->
       <div class="footer-links-column">
         <h4>Support</h4>
         <ul>
@@ -298,7 +200,6 @@
         </ul>
       </div>
 
-      <!-- Kolom 4: Get In Touch -->
       <div class="footer-links-column">
         <h4>Get In Touch</h4>
         <ul class="footer-contact-info-list">
@@ -307,10 +208,8 @@
           <li>hello@petalsco.co.id</li>
         </ul>
       </div>
-
     </div>
 
-    <!-- Copyright -->
     <div class="footer-bottom-copyright">
       <p>&copy; 2026 Petals & Co. Crafted with love.</p>
       <p>All Rights Reserved.</p>
@@ -342,7 +241,7 @@
           badge.style.display = data.cart_count > 0 ? '' : 'none';
           badge.textContent = data.cart_count > 0 ? data.cart_count : '';
         } else {
-          alert('Please login first.');
+          alert('Silakan login terlebih dahulu.');
         }
       })
       .catch(err => console.error(err));

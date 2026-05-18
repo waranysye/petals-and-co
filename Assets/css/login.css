@@ -1,154 +1,256 @@
-/* assets/css/login.css */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
-body {
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffffff; /* tetap putih */
-    color: #444;
-    overflow: hidden;
-    animation: fadeIn 1s ease-in-out;
+/* ─── Reset ─── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Animasi masuk */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: #f8f6f2;
+  color: #0e1b15;
 }
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+/* ─── Split Layout ─── */
+.auth-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
 }
 
-.login-box {
-    width: 360px;
-    padding: 40px 30px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid #f5d6de;
-    box-shadow: 0 8px 25px rgba(233, 140, 167, 0.15);
-    text-align: center;
-    transition: all 0.3s ease;
-    animation: slideUp 1s ease-out;
+/* ─── Left — Image Panel ─── */
+.auth-image {
+  position: relative;
+  overflow: hidden;
 }
 
-/* Efek muncul dari bawah */
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.auth-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.login-box:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(233, 140, 167, 0.25);
+.auth-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 27, 21, 0.15) 0%,
+    rgba(14, 27, 21, 0.45) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px;
 }
 
-.logo {
-    width: 150px;
-    height: auto;
-    display: block;
-    margin: 0 auto 20px;
-    transition: transform 0.3s ease;
+.auth-image-overlay .brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  margin-bottom: 12px;
 }
 
-.logo:hover {
-    transform: scale(1.05);
+.auth-image-overlay .tagline {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
-
-/* Efek logo mengambang */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-6px);
-    }
+/* ─── Right — Form Panel ─── */
+.auth-form-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 48px;
+  background: #ffffff;
 }
 
-h2 {
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: #e98ca7;
+.auth-form-box {
+  width: 100%;
+  max-width: 400px;
 }
 
-p {
-    color: #777;
-    font-size: 14px;
-    margin-bottom: 25px;
+/* ─── Logo ─── */
+.auth-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  margin-bottom: 32px;
+  display: block;
 }
 
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background: #fff;
-    outline: none;
-    transition: 0.3s;
-    font-size: 14px;
+/* ─── Headings ─── */
+.auth-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 400;
+  color: #0e1b15;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
-    border-color: #e98ca7;
-    box-shadow: 0 0 6px rgba(233, 140, 167, 0.4);
+.auth-subtitle {
+  font-size: 14px;
+  color: #716f6b;
+  margin-bottom: 36px;
+  line-height: 1.5;
 }
 
-input[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #e98ca7, #f3b8c7);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
+/* ─── Alert Messages ─── */
+.alert-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
-input[type="submit"]:hover {
-    background: linear-gradient(135deg, );
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(233, 140, 167, 0.3);
+.alert-error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
-.signup {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #666;
+/* ─── Form ─── */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.signup a {
-    color: #e98ca7;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.signup a:hover {
-    color: #d96b8b;
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #4a4844;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e5e2db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: #0e1b15;
+  background: #fafaf9;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #bf9b30;
+  box-shadow: 0 0 0 3px rgba(191, 155, 48, 0.1);
+  background: #ffffff;
+}
+
+.form-group input::placeholder {
+  color: #b0aea9;
+}
+
+/* ─── Submit Button ─── */
+.btn-auth {
+  width: 100%;
+  padding: 15px;
+  background: #0e1b15;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 4px;
+}
+
+.btn-auth:hover {
+  background: #bf9b30;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(191, 155, 48, 0.25);
+}
+
+.btn-auth:active {
+  transform: translateY(0);
+}
+
+/* ─── Footer Link ─── */
+.auth-footer {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 13px;
+  color: #716f6b;
+}
+
+.auth-footer a {
+  color: #0e1b15;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid #bf9b30;
+  padding-bottom: 1px;
+  transition: color 0.2s;
+}
+
+.auth-footer a:hover {
+  color: #bf9b30;
+}
+
+/* ─── Decorative Divider ─── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 8px 0;
+  color: #c8c5bf;
+  font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e2db;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .auth-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-image {
+    height: 240px;
+  }
+
+  .auth-form-panel {
+    padding: 40px 24px;
+  }
 }

@@ -1,187 +1,79 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: #f5f5f5;
-}
-
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 220px;
-  background: #fff;
-  min-height: 100vh;
-  border-right: 1px solid #eee;
-  padding: 20px 0;
-}
-
-.sidebar h2 {
-  text-align: center;
-  font-size: 20px;
-  margin-bottom: 30px;
-  color: #f38cb8;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin: 8px 0;
-}
-
-.sidebar ul li a {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #333;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-
-.sidebar ul li a.active,
-.sidebar ul li a:hover {
-  background: #fbb6ce;
-  color: #000;
-}
-
-.sidebar .bottom-menu {
-  margin-top: 50px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
-}
-
-/* Header */
-.header {
-  position: fixed;
-  top: 0;
-  left: 220px; /* supaya tidak tabrakan dengan sidebar */
-  right: 0;
-  z-index: 1000;
-  height: 70px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: #fafafa;
-  border-bottom: 1px solid #eee;
-}
-
-.header h1 {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.header .admin {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.header .admin img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Main Content */
-.main-content {
-  margin-left: 220px; /* geser sesuai sidebar */
-  margin-top: 70px;   /* geser sesuai tinggi header */
-  padding: 20px;
-}
-
-/* Tombol tambah produk */
+/* Unique Add Product / Edit Action Styles */
 .top-bar {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .btn-add {
-  background: #f38cb8;
-  color: #fff;
+  background: #bf9b30; /* luxury gold */
+  color: #ffffff;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 6px;
   text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(191, 155, 48, 0.15);
 }
 
 .btn-add:hover {
-  background: #f06292;
+  background: #0e1b15; /* signature deep green */
+  box-shadow: 0 4px 10px rgba(14, 27, 21, 0.15);
 }
 
-/* Tabel produk */
-.table-container {
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-thead {
-  background: #fbb6ce;
-}
-
-thead th {
-  padding: 12px;
-  text-align: left;
-}
-
-tbody td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  vertical-align: middle;
-}
-
-tbody tr:hover {
-  background: #fff0f5;
-}
-
-/* Gambar produk */
-table img {
-  border-radius: 6px;
-}
-
-/* Tombol aksi */
+/* Actions buttons styling */
 .btn-edit, .btn-delete {
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   text-decoration: none;
   margin-right: 5px;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
 
 .btn-edit {
-  background: #4CAF50;
-  color: #fff;
+  background: #0e1b15; /* signature forest green */
+  color: #ffffff;
 }
 
 .btn-edit:hover {
-  background: #43a047;
+  background: #bf9b30; /* luxury gold */
 }
 
 .btn-delete {
-  background: #e74c3c;
-  color: #fff;
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
 }
 
 .btn-delete:hover {
-  background: #c0392b;
+  background: #c62828;
+  color: #ffffff;
+}
+
+/* Alert notifications style */
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  display: inline-block;
+  width: 100%;
+}
+
+.alert.success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+.alert.error {
+  background: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
 }

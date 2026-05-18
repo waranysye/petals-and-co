@@ -3,7 +3,14 @@
   $current_page = basename($_SERVER['PHP_SELF']);
 
   session_start();
-include '../Config/database.php';
+
+  // Guard: Ensure user is logged in and is an admin
+  if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+      header("Location: ../auth/login.php");
+      exit();
+  }
+
+  include '../Config/database.php';
 
 // Ambil nama file
 $current_page = basename($_SERVER['PHP_SELF']);
@@ -24,19 +31,20 @@ $admin = $query->fetch_assoc();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <!-- Panggil file CSS -->
-  <link rel="stylesheet" href="../Assets/css/profileadmin.css">
+  <link rel="stylesheet" href="../Assets/css/indexadmin.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="../Assets/css/profileadmin.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <h2>My App</h2>
+    <h2>Petals & Co</h2>
     <ul>
-      <li><a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">🏠Dashboard</a></li>
-      <li><a href="products.php" class="<?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">🌸Produk</a></li>
-      <li><a href="customers.php" class="<?php echo ($current_page == 'customers.php') ? 'active' : ''; ?>">👥Orders</a></li>
-      <li><a href="reports.php" class="<?php echo ($current_page == 'reports.php') ? 'active' : ''; ?>">📊Laporan</a></li>
-      <li><a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">⚙️Akun</a></li>
+      <li><a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">🏠 Dashboard</a></li>
+      <li><a href="products.php" class="<?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">🌸 Products</a></li>
+      <li><a href="customers.php" class="<?php echo ($current_page == 'customers.php') ? 'active' : ''; ?>">👥 Orders</a></li>
+      <li><a href="reports.php" class="<?php echo ($current_page == 'reports.php') ? 'active' : ''; ?>">📊 Reports</a></li>
+      <li><a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">⚙️ Account</a></li>
        <li class="bottom-menu"><a href="logout.php">🚪 Logout</a></li>
     </ul>
   </div>
@@ -48,10 +56,10 @@ $admin = $query->fetch_assoc();
         // Judul otomatis berdasarkan halaman
         switch($current_page) {
           case 'index.php': echo 'Dashboard'; break;
-          case 'products.php': echo 'Produk'; break;
-          case 'customers.php': echo 'Pelanggan'; break;
-          case 'reports.php': echo 'Laporan'; break;
-          case 'profile.php': echo 'Akun'; break;
+          case 'products.php': echo 'Products'; break;
+          case 'customers.php': echo 'Orders'; break;
+          case 'reports.php': echo 'Reports'; break;
+          case 'profile.php': echo 'Account'; break;
           default: echo 'Admin Panel';
         }
       ?>
@@ -67,19 +75,19 @@ $admin = $query->fetch_assoc();
 
     <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
     <div class="alert-success">
-      ✅ Profil berhasil diperbarui!
+      ✅ Profile successfully updated!
     </div>
   <?php elseif (isset($_GET['error']) && $_GET['error'] == 1): ?>
     <div class="alert-error">
-      ❌ Gagal memperbarui profil. Silakan coba lagi.
+      ❌ Failed to update profile. Please try again.
     </div>
   <?php endif; ?>
 
     <div class="profile-container">
-      <h2>Informasi Profil</h2>
+      <h2>Profile Information</h2>
       <table>
         <tr>
-          <th>Nama</th>
+          <th>Name</th>
           <td><?= $admin['name']; ?></td>
         </tr>
         <tr>
@@ -87,7 +95,7 @@ $admin = $query->fetch_assoc();
           <td><?= $admin['email']; ?></td>
         </tr>
         <tr>
-          <th>No. Telepon</th>
+          <th>Phone Number</th>
           <td><?= $admin['phone'] ?: '-'; ?></td>
         </tr>
         <tr>
@@ -95,13 +103,13 @@ $admin = $query->fetch_assoc();
           <td><?= ucfirst($admin['role']); ?></td>
         </tr>
         <tr>
-          <th>Dibuat Pada</th>
+          <th>Created At</th>
           <td><?= date("d M Y", strtotime($admin['created_at'])); ?></td>
         </tr>
       </table>
 
       <div class="action">
-        <a href="edit_profileadmin.php?id=<?= $admin['id']; ?>" class="btn-edit">Edit Profil</a>
+        <a href="edit_profileadmin.php?id=<?= $admin['id']; ?>" class="btn-edit">Edit Profile</a>
       </div>
     </div>
   </div>

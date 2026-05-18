@@ -3,7 +3,14 @@
   $current_page = basename($_SERVER['PHP_SELF']);
 
   session_start();
-include '../Config/database.php';
+
+  // Guard: Ensure user is logged in and is an admin
+  if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+      header("Location: ../auth/login.php");
+      exit();
+  }
+
+  include '../Config/database.php';
 
 // Pastikan ada ID produk
 if (!isset($_GET['id'])) {
@@ -43,7 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         move_uploaded_file($_FILES['image']['tmp_name'], $targetFile);
     }
 
-
+    // Eksekusi update ke database
+    $updateStmt = $conn->prepare("UPDATE flowers SET name = ?, description = ?, price = ?, stock = ?, category = ?, image = ? WHERE id = ?");
+    $updateStmt->bind_param("ssdissi", $name, $description, $price, $stock, $category, $image, $id);
+    
+    if ($updateStmt->execute()) {
+        header("Location: edit_product.php?id=$id&success=Produk berhasil diperbarui!");
+        exit;
+    } else {
+        header("Location: edit_product.php?id=$id&error=Gagal memperbarui produk: " . $conn->error);
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -52,19 +69,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Product</title>
-  <link rel="stylesheet" href="../Assets/css/edit_product.css">
+  <link rel="stylesheet" href="../Assets/css/indexadmin.css?v=<?php echo time(); ?>">
+  <link rel="stylesheet" href="../Assets/css/edit_product.css?v=<?php echo time(); ?>">
 </head>
 <body>
  <!-- Sidebar -->
   <div class="sidebar">
-    <h2>My App</h2>
+    <h2>Petals & Co</h2>
     <ul>
-      <li><a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">🏠Dashboard</a></li>
-      <li><a href="products.php" class="<?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">🌸Produk</a></li>
-      <li><a href="customers.php" class="<?php echo ($current_page == 'customers.php') ? 'active' : ''; ?>">👥Orders</a></li>
-      <li><a href="reports.php" class="<?php echo ($current_page == 'reports.php') ? 'active' : ''; ?>">📊Laporan</a></li>
-      <li><a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">⚙️Akun</a></li>
-      <li class="bottom-menu"><a href="auth/login.php">Logout</a></li>
+      <li><a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">🏠 Dashboard</a></li>
+      <li><a href="products.php" class="<?php echo ($current_page == 'products.php') ? 'active' : ''; ?>">🌸 Products</a></li>
+      <li><a href="customers.php" class="<?php echo ($current_page == 'customers.php') ? 'active' : ''; ?>">👥 Orders</a></li>
+      <li><a href="reports.php" class="<?php echo ($current_page == 'reports.php') ? 'active' : ''; ?>">📊 Reports</a></li>
+      <li><a href="profile.php" class="<?php echo ($current_page == 'profile.php') ? 'active' : ''; ?>">⚙️ Account</a></li>
+      <li class="bottom-menu"><a href="logout.php">🚪 Logout</a></li>
     </ul>
   </div>
 
@@ -75,10 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Judul otomatis berdasarkan halaman
         switch($current_page) {
           case 'index.php': echo 'Dashboard'; break;
-          case 'products.php': echo 'Produk'; break;
-          case 'customers.php': echo 'Pelanggan'; break;
-          case 'reports.php': echo 'Laporan'; break;
-          case 'profile.php': echo 'Akun'; break;
+          case 'products.php': echo 'Products'; break;
+          case 'customers.php': echo 'Orders'; break;
+          case 'reports.php': echo 'Reports'; break;
+          case 'profile.php': echo 'Account'; break;
           default: echo 'Admin Panel';
         }
       ?>
@@ -124,17 +142,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <label for="category">Category</label>
       <select id="category" name="category" required>
-        <option value="Bunga Matahari" <?= ($product['category'] == 'Bunga Matahari') ? 'selected' : ''; ?>>Bunga Matahari</option>
-        <option value="Bunga Mawar" <?= ($product['category'] == 'Bunga Mawar') ? 'selected' : ''; ?>>Bunga Mawar</option>
-        <option value="Bunga Anggrek" <?= ($product['category'] == 'Bunga Anggrek') ? 'selected' : ''; ?>>Bunga Anggrek</option>
+        <option value="Bunga Matahari" <?= ($product['category'] == 'Bunga Matahari') ? 'selected' : ''; ?>>Sunflower</option>
+        <option value="Bunga Mawar" <?= ($product['category'] == 'Bunga Mawar') ? 'selected' : ''; ?>>Rose</option>
+        <option value="Bunga Anggrek" <?= ($product['category'] == 'Bunga Anggrek') ? 'selected' : ''; ?>>Orchid</option>
       </select>
 
       <label for="image">Product Image</label>
       <div class="file-upload">
         <input type="file" id="image" name="image" accept="image/*">
         <?php if ($product['image']): ?>
-          <p>Current Image:</p>
-          <img src="../Assets/img/<?= htmlspecialchars($product['image']); ?>" alt="Product Image" width="100">
+          <p style="margin-top: 10px;">Current Image:</p>
+          <img src="../Assets/img/<?= htmlspecialchars($product['image']); ?>" alt="Product Image" width="100" style="border-radius: 6px; margin-top: 5px;">
         <?php endif; ?>
       </div>
 
