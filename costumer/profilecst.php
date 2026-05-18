@@ -2,11 +2,11 @@
   // Ambil nama file yang sedang dibuka
   $current_page = basename($_SERVER['PHP_SELF']);
   session_start();
-include '../config/database.php';
+include '../Config/database.php';
 
 // Pastikan user sudah login
 if (!isset($_SESSION['user_id'])) {
-    header("Location: auth/login.php");
+    header("Location: ../auth/login.php");
     exit;
 }
 
@@ -66,18 +66,18 @@ $user = $result->fetch_assoc();
 
     <!-- Tengah: Logo -->
     <div class="header-center">
-      <a href="index.php" class="<?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">
+      <a href="idexcostumer.php" class="<?php echo ($current_page == 'idexcostumer.php') ? 'active' : ''; ?>">
          <img src="../Assets/img/flower-logo.png" alt="Logo Florist" class="Logo"> 
       </a>
     </div>
 
-    <!-- Kanan: Transaction + Chart -->
+    <!-- Kanan: Transaction + Cart -->
     <div class="header-right">
       <a href="transaction.php" class="<?php echo ($current_page == 'transaction.php') ? 'active' : ''; ?>">
         <img src="../Assets/img/icontrans.png" alt="Transaction" width="20"> My Transaction
       </a>
       <a href="cart.php" class="<?php echo ($current_page == 'cart.php') ? 'active' : ''; ?>">
-        <img src="../Assets/img/iconkrnj.png" alt="Chart" width="20"> Chart
+        <img src="../Assets/img/iconkrnj.png" alt="Cart" width="20"> Cart
       </a>
     </div>
   </header>
@@ -130,7 +130,7 @@ $user = $result->fetch_assoc();
 
       <div class="form-actions">
         <button type="submit" class="btn-save">Save Changes</button>
-        <a href="indexcustomer.php" class="btn-cancel">Cancel</a>
+        <a href="idexcostumer.php" class="btn-cancel">Cancel</a>
       </div>
     </form>
   </main>

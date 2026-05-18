@@ -59,8 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Simpan detail order_items dan kurangi stok
         foreach ($cartItems as $item) {
             $subtotalItem = $item['price'] * $item['quantity'];
-            $itemQuery = $conn->prepare("INSERT INTO order_items (order_id, flower_id, quantity) VALUES (?, ?, ?)");
-            $itemQuery->bind_param("iii", $order_id, $item['flower_id'], $item['quantity']);
+            $itemQuery = $conn->prepare("INSERT INTO order_items (order_id, flower_id, quantity, subtotal) VALUES (?, ?, ?, ?)");
+            $itemQuery->bind_param("iiid", $order_id, $item['flower_id'], $item['quantity'], $subtotalItem);
             $itemQuery->execute();
 
             // Update stok bunga
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
   <!-- Kiri: Account -->
   <div class="header-left">
-    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : 'auth/login.php'; ?>" 
+    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : '../auth/login.php'; ?>" 
        class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
       <img src="../Assets/img/iconprofile.png" alt="Account" width="20"> Account
     </a>

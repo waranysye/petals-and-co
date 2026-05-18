@@ -10,7 +10,7 @@ $message = "";
 
 // Pastikan koneksi berhasil
 if (!isset($conn)) {
-    die("<p style='color:red;'>Koneksi database gagal! Cek path config/database.php</p>");
+    die("<p style='color:red;'>Koneksi database gagal! Cek path Config/database.php</p>");
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
        
 
-        if ($password === $user['password']) {
+        if (password_verify($password, $user['password']) || $password === $user['password']) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['email'] = $user['email'];

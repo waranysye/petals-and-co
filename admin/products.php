@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../config/database.php';
+include '../Config/database.php';
 
 // Ambil nama file yang sedang dibuka
 $current_page = basename($_SERVER['PHP_SELF']);
@@ -57,7 +57,7 @@ if (isset($_GET['hapus_produk'])) {
           case 'products.php': echo 'Produk'; break;
           case 'customers.php': echo 'Pelanggan'; break;
           case 'reports.php': echo 'Laporan'; break;
-          case 'profil.php': echo 'Akun'; break;
+          case 'profile.php': echo 'Akun'; break;
           default: echo 'Admin Panel';
         }
       ?>

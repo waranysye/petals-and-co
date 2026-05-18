@@ -1,9 +1,9 @@
 <?php
 session_start();
-include '../config/database.php';
+include '../Config/database.php';
 
 if (!isset($_SESSION['user_id'])) {
-  echo json_encode(['success' => false, 'message' => 'User not logged in']);
+  echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
   exit;
 }
 
@@ -37,5 +37,5 @@ $countRes = $conn->query("SELECT COUNT(*) as total FROM cart WHERE user_id=$user
 $countRow = $countRes->fetch_assoc();
 $totalItems = $countRow['total'];
 
-echo json_encode(['success' => true, 'total' => $totalItems]);
+echo json_encode(['status' => 'success', 'cart_count' => $totalItems]);
 ?>

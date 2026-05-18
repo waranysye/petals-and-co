@@ -2,7 +2,7 @@
 // Ambil nama file yang sedang dibuka
 $current_page = basename($_SERVER['PHP_SELF']);
 session_start();
-include '../config/database.php';
+include '../Config/database.php';
 
 // Query produk kategori Matahari
 $sql = "SELECT * FROM flowers WHERE category = 'Bunga Matahari'";
@@ -82,7 +82,7 @@ if (isset($_GET['remove'])) {
 <header>
   <!-- Kiri: Account -->
   <div class="header-left">
-    <a href="<?php echo isset($_SESSION['user_id']) ? '../costumer/profilecst.php' : '../costumer/auth/login.php'; ?>" 
+    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : '../auth/login.php'; ?>" 
        class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
       <img src="../Assets/img/iconprofile.png" alt="Account" width="20"> Account
     </a>
@@ -90,28 +90,24 @@ if (isset($_GET['remove'])) {
 
   <!-- Tengah: Logo -->
   <div class="header-center">
-    <a href="../costumer/profilecst.php" class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
+    <a href="profilecst.php" class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
        <img src="../Assets/img/flower-logo.png" alt="Logo Florist" class="Logo"> 
     </a>
   </div>
 
   <!-- Kanan: Transaction + Cart -->
-<div class="header-right">
-  <a href="../costumer/transaction.php" 
-     class="<?php echo ($current_page == 'transaction.php') ? 'active' : ''; ?>">
-    <img src="../Assets/img/icontrans.png" alt="Transaction" width="20"> My Transaction
-  </a>
+  <div class="header-right">
+    <a href="transaction.php" class="<?php echo ($current_page == 'transaction.php') ? 'active' : ''; ?>">
+      <img src="../Assets/img/icontrans.png" alt="Transaction" width="20"> My Transaction
+    </a>
 
-  <a href="../costumer/cart.php" 
-     class="<?php echo ($current_page == 'cart.php') ? 'active' : ''; ?>"
-     style="position: relative;">
-    <img src="../Assets/img/iconkrnj.png" alt="Cart" width="20"> Cart
-
-    <?php if ($count_cart > 0): ?>
-      <span class="cart-badge"><?= $count_cart; ?></span>
-    <?php endif; ?>
-  </a>
-</div>
+    <a href="cart.php" class="<?php echo ($current_page == 'cart.php') ? 'active' : ''; ?>" style="position: relative;">
+      <img src="../Assets/img/iconkrnj.png" alt="Cart" width="20"> Cart
+      <?php if ($count_cart > 0): ?>
+        <span class="cart-badge"><?= $count_cart; ?></span>
+      <?php endif; ?>
+    </a>
+  </div>
 </header>
 
   <!-- Tombol Back -->

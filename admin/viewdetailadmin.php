@@ -3,7 +3,7 @@
   $current_page = basename($_SERVER['PHP_SELF']);
 
   session_start();
-include '../config/database.php';
+include '../Config/database.php';
 
 if (!isset($_GET['id'])) {
   header("Location: customers.php");
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           case 'products.php': echo 'Produk'; break;
           case 'customers.php': echo 'Pelanggan'; break;
           case 'reports.php': echo 'Laporan'; break;
-          case 'profil.php': echo 'Akun'; break;
+          case 'profile.php': echo 'Akun'; break;
           default: echo 'Admin Panel';
         }
       ?>

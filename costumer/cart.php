@@ -63,29 +63,29 @@ while ($row = $result->fetch_assoc()) {
 <header>
   <!-- Kiri: Account -->
   <div class="header-left">
-    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : '../Assets/auth/login.php'; ?>" 
+    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : '../auth/login.php'; ?>" 
        class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
       <img src="../Assets/img/iconprofile.png" alt="Account" width="20"> Account
     </a>
   </div>
 
-    <!-- Tengah: Logo -->
-    <div class="header-center">
-      <a href="../costumer/profilecst.php" class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
-         <img src="../Assets/img/flower-logo.png" alt="Logo Florist" class="Logo"> 
-      </a>
-    </div>
+  <!-- Tengah: Logo -->
+  <div class="header-center">
+    <a href="profilecst.php" class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
+       <img src="../Assets/img/flower-logo.png" alt="Logo Florist" class="Logo"> 
+    </a>
+  </div>
 
-    <!-- Kanan: Transaction + Chart -->
-    <div class="header-right">
-      <a href="transaction.php" class="<?php echo ($current_page == 'transaction.php') ? 'active' : ''; ?>">
-        <img src="../Assets/img/icontrans.png" alt="Transaction" width="20"> My Transaction
-      </a>
-      <a href="cart.php" class="<?php echo ($current_page == 'cart.php') ? 'active' : ''; ?>">
-        <img src="../Assets/img/iconkrnj.png" alt="Chart" width="20"> Chart
-      </a>
-    </div>
-  </header>
+  <!-- Kanan: Transaction + Cart -->
+  <div class="header-right">
+    <a href="transaction.php" class="<?php echo ($current_page == 'transaction.php') ? 'active' : ''; ?>">
+      <img src="../Assets/img/icontrans.png" alt="Transaction" width="20"> My Transaction
+    </a>
+    <a href="cart.php" class="<?php echo ($current_page == 'cart.php') ? 'active' : ''; ?>">
+      <img src="../Assets/img/iconkrnj.png" alt="Cart" width="20"> Cart
+    </a>
+  </div>
+</header>
 
     <!-- Tombol Back -->
   <div class="back-btn">

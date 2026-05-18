@@ -3,7 +3,7 @@
   $current_page = basename($_SERVER['PHP_SELF']);
 
   session_start();
-include '../config/database.php';
+include '../Config/database.php';
 
 // Ambil data total dari database
 $total_customers = $conn->query("SELECT COUNT(*) AS total FROM users")->fetch_assoc()['total'];
@@ -20,11 +20,12 @@ $order_cancelled = $conn->query("SELECT COUNT(*) AS total FROM orders WHERE stat
 
 $payment_reports = $conn->query("
     SELECT 
-        payment_method,
-        SUM(total_amount) AS amount,
-        COUNT(id) AS transactions
-    FROM orders
-    GROUP BY payment_method
+        p.payment_method,
+        SUM(o.total_amount) AS amount,
+        COUNT(o.id) AS transactions
+    FROM orders o
+    JOIN payments p ON o.id = p.order_id
+    GROUP BY p.payment_method
 ");
 
 // Stock & Best-Selling Products
@@ -72,7 +73,7 @@ $best_selling = $conn->query("
           case 'products.php': echo 'Produk'; break;
           case 'customers.php': echo 'Pelanggan'; break;
           case 'reports.php': echo 'Laporan'; break;
-          case 'profil.php': echo 'Akun'; break;
+          case 'profile.php': echo 'Akun'; break;
           default: echo 'Admin Panel';
         }
       ?>

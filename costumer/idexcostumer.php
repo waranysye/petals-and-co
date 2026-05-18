@@ -46,18 +46,20 @@ include '../Config/database.php';
 
    <!-- Banner Promo -->
   <section class="promo-banner">
-     <img src="../Assets/img/promosi.png" alt="Chart" width="20"> Chart
+     <img src="../Assets/img/promosi.png" alt="Promo Banner">
     <div class="promo-text">
-      <a href="viewproduct.php" class="btn-shop">Shop Now</a>
+      <h1>Selamat Datang di Rosette Florist</h1>
+      <p>Temukan rangkaian bunga segar terbaik untuk setiap momen berharga Anda 🌸</p>
+      <a href="#category-section" class="btn-shop">Shop Now</a>
     </div>
   </section>
 
   <!-- Shop by Category -->
-  <section class="category">
+  <section class="category" id="category-section">
     <h2>Shop by Category</h2>
     <div class="category-cards">
       <a href="viewmatahari.php" class="card">   
-     <img src="../Assets/img/sunflowerctg.jpg" alt="Chart" width="20"> 
+     <img src="../Assets/img/sunflowerctg.jpg" alt="Bunga Matahari"> 
         <h3>Bunga Matahari</h3>
       </a>
       <a href="viewmawar.php" class="card">

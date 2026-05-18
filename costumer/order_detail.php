@@ -7,7 +7,7 @@ include '../Config/database.php';
 
 // Cek apakah user sudah login
 if (!isset($_SESSION['user_id'])) {
-    header("Location: auth/login.php");
+    header("Location: ../auth/login.php");
     exit;
 }
 
@@ -54,15 +54,15 @@ $items = $item_query->get_result()->fetch_all(MYSQLI_ASSOC);
 <header>
   <!-- Kiri: Account -->
   <div class="header-left">
-    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : 'auth/login.php'; ?>" 
+    <a href="<?php echo isset($_SESSION['user_id']) ? 'profilecst.php' : '../auth/login.php'; ?>" 
        class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
       <img src="../Assets/img/iconprofile.png" alt="Account" width="20"> Account
     </a>
   </div>
 
-    <!-- Tengah: Logo -->
+  <!-- Tengah: Logo -->
   <div class="header-center">
-    <a href="profilecst.php" class="<?php echo ($current_page == 'profilecst.php') ? 'active' : ''; ?>">
+    <a href="idexcostumer.php" class="<?php echo ($current_page == 'idexcostumer.php') ? 'active' : ''; ?>">
       <img src="../Assets/img/flower-logo.png" alt="Logo Florist" class="Logo"> 
     </a>
   </div>
